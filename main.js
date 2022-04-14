@@ -33,20 +33,29 @@ Webcam.set({
 
 function Save_selfie(){
     mylink = document.getElementById("link");
-    my_img = document.getElementById("selfie_img").src;    
+    my_img = document.getElementById("selfie_img3").src;    
     mylink.href = my_img;
     mylink.click();
     
 }
 
-
+var img_id = "";
 
 function take_selfie(){
     Webcam.snap(function(selfie){
-    document.getElementById("output").innerHTML = "<img id='selfie_img' src='"+selfie+ "'>";  
-    });
-}
 
+        if (img_id == "s1"){
+            document.getElementById("result1").innerHTML = "<img id='selfie_img1' src='"+selfie+ "'>"; 
+        }
+        else if (img_id == "s2"){
+            document.getElementById("result2").innerHTML = "<img id='selfie_img2' src='"+selfie+ "'>"; 
+        }
+        else if (img_id == "s3"){
+            document.getElementById("result3").innerHTML = "<img id='selfie_img3' src='"+selfie+ "'>"; 
+        }
+
+     });
+}
 
 
 
@@ -58,12 +67,37 @@ function Speak(){
     Webcam.attach(my_camera);
     
     setTimeout(function(){
+
+        img_id = "s1";
         take_selfie();
-        Save_selfie();
-    },5000 );
+       
+        speak_data =  "Taking another selfie in next 10 seconds";
+        var utterThis = new SpeechSynthesisUtterance(speak_data);
+        synth.speak(utterThis);   
+
+
+    },5000);
+
+    setTimeout(function(){
+
+        img_id = "s2";
+
+        take_selfie();
+       
+        speak_data =  "Taking another selfie in next 15 seconds";
+        var utterThis = new SpeechSynthesisUtterance(speak_data);
+        synth.speak(utterThis);   
+
+
+    },10000);
+
+    setTimeout(function(){
+
+        img_id = "s3";
+        take_selfie(); 
+        Save_selfie(); 
+
+    },15000);
     
     
 }
-
-
-
